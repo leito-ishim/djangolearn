@@ -8,7 +8,7 @@ def index(request):
         'title': 'geekshop',
         'header': 'Добро пожаловать на сайт'
     }
-    return render(request, 'index.html', context)
+    return render(request, 'mainapp/index.html', context)
 
 
 def products(request):
@@ -35,4 +35,4 @@ def products(request):
              'href':'/static/vendor/img/products/Dark-blue-wide-leg-ASOs-DESIGN-trousers.png'}
         ]
     }
-    return render(request, 'products.html', context)
+    return render(request, 'mainapp/products.html', context)
