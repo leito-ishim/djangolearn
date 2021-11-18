@@ -19,11 +19,14 @@ from mainapp.views import index,products
 
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import include
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
-    path('products/', products, name='products'),
+    path('products/', include('mainapp.urls', namespace='products')),
+    path('admin/', admin.site.urls),
 ]
 
 if settings.DEBUG:
