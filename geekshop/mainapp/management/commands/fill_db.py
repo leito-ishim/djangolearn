@@ -1,4 +1,6 @@
 import json
+
+from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 from mainapp.models import ProductCategory, Product
 
@@ -29,3 +31,9 @@ class Command(BaseCommand):
             prod['category'] = _category
             new_category = Product(**prod)
             new_category.save()
+
+        User = get_user_model()
+        if not User.objects.filter(username='nikita').exists():
+            User.objects.create_superuser(username='nikita',
+                                          email='',
+                                          password='123')
