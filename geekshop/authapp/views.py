@@ -6,7 +6,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.urls import reverse
 
-from authapp.forms import UserLoginForm,UserRegisterForm
+from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm
 
 
 def login(request):
@@ -48,6 +48,13 @@ def registration(request):
     }
     return render(request, 'authapp/register.html', context)
 
+def profile(request):
+
+    context = {
+        'title': 'Geekshop | Профайл',
+        'form': UserProfileForm(),
+    }
+    return render(request, 'authapp/profile.html', context)
 
 def logout(request):
     auth.logout(request)
