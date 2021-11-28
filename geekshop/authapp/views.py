@@ -1,4 +1,5 @@
 from django.contrib import auth, messages
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
 from django.shortcuts import render
@@ -20,8 +21,8 @@ def login(request):
             if user.is_active:
                 auth.login(request,user)
                 return HttpResponseRedirect(reverse('index'))
-        # else:
-        #     print(form.errors)
+        else:
+            print(form.errors)
     else:
         form = UserLoginForm()
     context = {
@@ -49,14 +50,17 @@ def registration(request):
     }
     return render(request, 'authapp/register.html', context)
 
+@login_required
 def profile(request):
     if request.method == 'POST':
         form = UserProfileForm(instance=request.user, data=request.POST, files=request.FILES)
         if form.is_valid():
-            form.save()
+            messages.set_level(request, messages.SUCCESS)
             messages.success(request, 'Изменения сохранены')
+            form.save()
         else:
-            print(form.errors)
+            messages.set_level(request, messages.ERROR)
+            messages.error(request, form.errors)
 
     context = {
         'title': 'Geekshop | Профайл',

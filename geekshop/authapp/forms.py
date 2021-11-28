@@ -2,12 +2,12 @@ from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,UserCh
 from django import forms
 
 from authapp.models import User
-from authapp.validator import validate_name
+from authapp.validator import validate_username, validate_name
 
 
 class UserLoginForm(AuthenticationForm):
 
-    #username = forms.CharField(widget=forms.TextInput(), validators=[validate_name])
+    username = forms.CharField(widget=forms.TextInput(), validators=[validate_username])
     class Meta:
         model = User
         fields = ('username', 'password')
@@ -21,6 +21,9 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserRegisterForm(UserCreationForm):
+    username = forms.CharField(widget=forms.TextInput(), validators=[validate_username])
+    first_name = forms.CharField(widget=forms.TextInput(), validators=[validate_name])
+    last_name = forms.CharField(widget=forms.TextInput(), validators=[validate_name])
 
     class Meta:
         model = User
@@ -39,6 +42,8 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserProfileForm(UserChangeForm):
+    first_name = forms.CharField(widget=forms.TextInput(), validators=[validate_name])
+    last_name = forms.CharField(widget=forms.TextInput(), validators=[validate_name])
     image = forms.ImageField(widget=forms.FileInput(), required=False)
     age = forms.IntegerField(widget=forms.NumberInput(), required=False)
 
