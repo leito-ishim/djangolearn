@@ -48,3 +48,14 @@ def products(request):
     #     ]
     # }
     return render(request, 'mainapp/products.html', context)
+
+
+def detail(request, product_id):
+    product = Product.objects.get(id=product_id)
+    title = 'Geekshop | Описание товара'
+
+    context = {'title': title,
+               'product': product,
+    }
+
+    return render(request, 'mainapp/detail.html', context)
