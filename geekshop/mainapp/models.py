@@ -2,8 +2,9 @@ from django.db import models
 
 # Create your models here.
 class ProductCategory(models.Model):
-    name = models.CharField(max_length=64, verbose_name='название категории', unique=True)
+    name = models.CharField(max_length=64, verbose_name='Название категории', unique=True)
     description = models.TextField(verbose_name='Описание раздела товаров', blank=True, null=True)
+    is_active = models.BooleanField(verbose_name='Активна', default=True)
 
     def __str__(self):
         return self.name
@@ -17,6 +18,7 @@ class Product(models.Model):
     description = models.TextField(verbose_name='Описание товара, продукта', blank=True, null=True)
     price = models.DecimalField(verbose_name='стоимость продукта', max_digits=8, decimal_places=2, default=0)
     quantity = models.PositiveIntegerField(verbose_name='количество товара', default=0)
+    is_active = models.BooleanField(verbose_name='Активна', default=True)
 
     def __str__(self):
         return f'{self.name} ({self.category.name})'
