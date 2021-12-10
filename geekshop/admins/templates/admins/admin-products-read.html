@@ -26,7 +26,7 @@
                                 </thead>
 
                                 <tbody>
-                                {% for product in products %}
+                                {% for product in object_list %}
                                 <tr style="{% if not product.is_active %} background-color: grey {% endif %}">
                                     <td><a href="{% url 'admins:admin_products_update' product.id %}" style="color: dodgerblue">{{ product.name }}</a></td>
                                     <td>{{ product.category.name }}</td>

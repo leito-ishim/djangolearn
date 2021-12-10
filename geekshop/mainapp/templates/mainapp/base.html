@@ -36,7 +36,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'products:index' %}">Каталог <i class="fas fa-shopping-bag"></i> </a>
+                    <a class="nav-link" href="{% url 'mainapp:products' %}">Каталог <i class="fas fa-shopping-bag"></i> </a>
                 </li>
                 {% if not user.is_authenticated %}
                 <li class="nav-item">
@@ -44,7 +44,7 @@
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'authapp:profile' %}">{{ user.username }}
+                    <a class="nav-link" href="{% url 'authapp:profile' user.id %}">{{ user.username }}
                         <i class="fas fa-user-circle"></i>
                     </a>
                 </li>
