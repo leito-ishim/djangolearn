@@ -10,6 +10,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from admins.forms import UserAdminRegisterForm, UserAdminProfileForm, CategoryAdminCreateForm, CategoryAdminUpdateForm, \
     ProductAdminCreateForm, ProductAdminUpdateForm
 from authapp.models import User
+from mainapp.mixin import CustomDispatchMixin, BaseClassContextMixin
 from mainapp.models import ProductCategory, Product
 
 #user
@@ -203,26 +204,24 @@ class ProductUpdateView(UpdateView):
         return super(ProductUpdateView, self).dispatch(request, *args, **kwargs)
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(DeleteView, CustomDispatchMixin):
     model = Product
     template_name = 'admins/admin-products-update-delete.html'
     form_class = ProductAdminUpdateForm
     success_url = reverse_lazy('admins:admin_products')
 
-    def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        self.object.is_active = False
-        self.object.save()
-        return HttpResponseRedirect(self.get_success_url())
+    #
+    # def delete(self, request, *args, **kwargs):
+    #     self.object = self.get_object()
+    #     self.object.is_active = False
+    #     self.object.save()
+    #     return HttpResponseRedirect(self.get_success_url())
+    #
+    # def get_context_data(self,*,object_list=None, **kwargs):
+    #     context = super(ProductDeleteView, self).get_context_data(**kwargs)
+    #     context['title'] = 'Админка | Удаление продукта'
+    #     return context
 
-    def get_context_data(self,*,object_list=None, **kwargs):
-        context = super(ProductDeleteView, self).get_context_data(**kwargs)
-        context['title'] = 'Админка | Удаление продукта'
-        return context
-
-    @method_decorator(user_passes_test(lambda u:u.is_superuser))
-    def dispatch(self, request, *args, **kwargs):
-        return super(ProductDeleteView, self).dispatch(request, *args, **kwargs)
 
 
 # @user_passes_test(lambda u:u.is_superuser)

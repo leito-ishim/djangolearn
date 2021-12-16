@@ -58,7 +58,10 @@ class CategoryAdminUpdateForm(forms.ModelForm):
 
 
 class ProductAdminCreateForm(forms.ModelForm):
+    category = forms.ModelChoiceField(queryset=ProductCategory.objects.all())
     image = forms.ImageField(widget=forms.FileInput(), required=False)
+
+
     class Meta:
         model = Product
         fields = ('name', 'category', 'image', 'short_desc', 'description', 'price', 'quantity')
@@ -72,6 +75,7 @@ class ProductAdminCreateForm(forms.ModelForm):
 
 
 class ProductAdminUpdateForm(forms.ModelForm):
+    category = forms.ModelChoiceField(queryset=ProductCategory.objects.all().select_related(), empty_label=None)
     image = forms.ImageField(widget=forms.FileInput(), required=False)
     class Meta:
         model = Product
