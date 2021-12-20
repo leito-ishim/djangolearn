@@ -5,14 +5,14 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, UpdateView, FormView
 
-from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm
+from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm, UserProfileEditForm
 from authapp.models import User
 from baskets.models import Basket
 
@@ -94,25 +94,6 @@ class RegisterlistView(FormView, BaseClassContextMixin):
 
 
 
-# @login_required
-# def profile(request):
-#     if request.method == 'POST':
-#         form = UserProfileForm(instance=request.user, data=request.POST, files=request.FILES)
-#         if form.is_valid():
-#             messages.set_level(request, messages.SUCCESS)
-#             messages.success(request, 'Изменения сохранены')
-#             form.save()
-#         else:
-#             messages.set_level(request, messages.ERROR)
-#             messages.error(request, form.errors)
-#
-#     context = {
-#         'title': 'Geekshop | Профайл',
-#         'form': UserProfileForm(instance=request.user),
-#         'baskets': Basket.objects.filter(user=request.user)
-#     }
-#     return render(request, 'authapp/profile.html', context)
-
 class ProfileFormView(UpdateView, BaseClassContextMixin, UserDispatchMixin):
     template_name = 'authapp/profile.html'
     form_class = UserProfileForm
@@ -120,13 +101,21 @@ class ProfileFormView(UpdateView, BaseClassContextMixin, UserDispatchMixin):
     success_message = 'Ok'
     title = 'Geekshop | Профиль'
 
+    def post(self, request, *args, **kwargs):
+        form = UserProfileForm(data=request.POST, files=request.FILES, instance=request.user)
+        profile_form = UserProfileEditForm(request.POST, instance=request.user.userprofile)
+        if form.is_valid() and profile_form.is_valid():
+            form.save()
+        return redirect(self.success_url)
+
+
     def get_object(self, *args, **kwargs):
         return get_object_or_404(User, pk=self.request.user.pk)
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(ProfileFormView, self).get_context_data(**kwargs)
-    #     context['baskets'] = Basket.objects.filter(user=self.request.user)
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super(ProfileFormView, self).get_context_data(**kwargs)
+        context['profile'] = UserProfileEditForm(instance=self.request.user.userprofile)
+        return context
 
     # @method_decorator(login_required)
     # def dispatch(self, request, *args, **kwargs):
@@ -162,3 +151,24 @@ class Logout(LogoutView):
 #         'form': form
 #     }
 #     return render(request, 'authapp/register.html', context)
+
+
+
+# @login_required
+# def profile(request):
+#     if request.method == 'POST':
+#         form = UserProfileForm(instance=request.user, data=request.POST, files=request.FILES)
+#         if form.is_valid():
+#             messages.set_level(request, messages.SUCCESS)
+#             messages.success(request, 'Изменения сохранены')
+#             form.save()
+#         else:
+#             messages.set_level(request, messages.ERROR)
+#             messages.error(request, form.errors)
+#
+#     context = {
+#         'title': 'Geekshop | Профайл',
+#         'form': UserProfileForm(instance=request.user),
+#         'baskets': Basket.objects.filter(user=request.user)
+#     }
+#     return render(request, 'authapp/profile.html', context)
