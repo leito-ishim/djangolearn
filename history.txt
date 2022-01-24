@@ -1,0 +1,84 @@
+    1  exit
+    2  cat /root/.ssh/id_rsa.pub
+    3  ls
+    4  ..
+    5  //
+    6  ./
+    7  ls 
+    8  ssh-keygen
+    9  cat /root/.ssh/id_rsa.pub
+   10  ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQD37XVRN8MukGIZgk7k14IhT2ipeSriYQz4nrF3zD44sJuQ52Cp2vx4Vyg3fWrMrHfvKBNJhqa40K23TyP+av90dnML2dkBzq2SlMeBkHkAiQg65FA9MbZvkEOGNrTi4hsbcd2gcnuYKSULv99m0N2uiiiC1a9pPboY3RBov9qQpbGwoBIfXFxOLFSpxb+NlxtjwxtIfVSW9qma2TIK/4LpRGtXg7Vru6tTMLjEOiNNB9BKVyz6XIzf3Lm7j/PRbZeaHHh640knh1pTqQxC/bJ1pBd6DBqR6PluVsO+CEgQXDszULfaKeTXWmaJH5bLoS4FyBIHQ3nvCouV5FYOYnwY3sWAdtW2EayVOCSfNYXCt5Q3olclA6uf4wt8oQDzwrfalAlSLlcbqBO4pC42UU68MQSXMbDEYkKzEKFGWEBwC+Rii1dCchV3+/7NoO0h/n79e1kDOclqve+vLPkRAYfNm+sJlCNGBg1GyLnVbmxwo7NxnSrfqTOQ6ldya+pNUY0= root@5-63-154-156.cloudvps.regruhosting.ruc
+   11  apt update
+   12  apt install nginx
+   13  apt install postgresql postgresql-contrib
+   14  apt install python3-venv
+   15  apt install git-core
+   16  ls
+   17  ll
+   18  cd ./
+   19  св ю
+   20  cd .
+   21  ls
+   22  cd /etc
+   23  cd /postgresql
+   24  ls
+   25  cd postgresql
+   26  ls
+   27  cd 12
+   28  ls
+   29  cd main/
+   30  ls
+   31  nano pg_hba.conf 
+   32  systemctl restart postgresql
+   33  useradd -g www-data -m django
+   34  cd /home
+   35  ls
+   36  cd django/
+   37  git clone git@github.com:leito-ishim/djangolearn.git
+   38  cd geekshop/
+   39  ls
+   40  cd djangolearn/
+   41  ls
+   42  cd geekshop/
+   43  ls
+   44  cd .
+   45  cd ../
+   46  python -m venv env
+   47  python3 -m venv env
+   48  source env/bin/activate
+   49  cd djangolearn/
+   50  cd geekshop/
+   51  git branch 
+   52  git checkout lesson_13
+   53  git branch 
+   54  source ../../env/bin/activate
+   55  pip install -r requirement.txt 
+   56  pip install gunicorn
+   57  python3 manage.py migrate
+   58  python3 manage.py fill_db
+   59  psql -U postgres
+   60  python3 manage.py migrate
+   61  python3 manage.py fill_db
+   62* python3 [A
+   63  python3 manage.py runserver 0.0.0.0:8000
+   64  nano /etc/systemd/system/gunicorn.service
+   65  sudo systemctl enable gunicorn
+   66  sudo systemctl start gunicorn
+   67  sudo systemctl status gunicorn
+   68  nano /etc/systemd/system/gunicorn.service
+   69  sudo systemctl enable gunicorn
+   70  sudo systemctl start gunicorn
+   71  sudo systemctl status gunicorn
+   72  chown -R django /home/django/
+   73  sudo systemctl restart gunicorn
+   74  sudo systemctl status gunicorn
+   75  sudo nano /etc/nginx/sites-available/geekshop
+   76  sudo ln -s /etc/nginx/sites-available/geekshop /etc/nginx/sites-enabled
+   77  sudo nginx -t
+   78  sudo systemctl restart nginx
+   79  rm /etc/nginx/sites-enabled/default
+   80  systemctl restart gunicorn
+   81  systemctl status gunicorn
+   82  cd
+   83  history
+   84  history > /tmp/history.txt
