@@ -2,10 +2,24 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
 import json
 
+from django.conf import settings
+from django.core.cache import cache
+
+
 from django.views.generic import DetailView
 
 from .models import ProductCategory, Product
 
+def get_link_category():
+    if settings.LOW_CACHE:
+        key = 'link_category'
+        link_category = cache.get(key)
+        if link_category is None:
+            link_category = ProductCategory.objects.all()
+            cache.set(key, link_category)
+        return link_category
+    else:
+        return ProductCategory.objects.all()
 
 # Create your views here.
 
