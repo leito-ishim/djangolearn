@@ -230,3 +230,16 @@ if DEBUG:
    ]
 
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 120
+CACHE_MIDDLEWARE_KEY_PREFIX = 'geekbrains'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.backends.memcached.MemcachedCache',
+        'LOCATION': '5.63.154.156:11211'
+    }
+}
+
+LOW_CACHE = True
