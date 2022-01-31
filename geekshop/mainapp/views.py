@@ -1,3 +1,5 @@
+import os.path
+
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
 import json
@@ -8,7 +10,10 @@ from django.core.cache import cache
 
 from django.views.generic import DetailView
 
-from .models import ProductCategory, Product
+from mainapp.models import ProductCategory, Product
+
+MODULE_DIR = os.path.dirname(__file__)
+
 
 def get_link_category():
     if settings.LOW_CACHE:
@@ -49,7 +54,8 @@ def products(request, id_category=None, page=1):
     except EmptyPage:
         products_paginator = paginator.page(paginator.num_pages)
 
-    categories = ProductCategory.objects.all()
+    # categories = ProductCategory.objects.all()
+    categories = get_link_category()
     context = {'title': title,
                'products': products_paginator,
                'categories': categories}
