@@ -32,24 +32,22 @@
                                {% endif %}
                                {{ field.errors.as_ul }}
 
-                               {% if field.name == 'price' %}
-                                    {% if not field.value %}
-                                    {% else %}
-                                        <span class="orderitems--{{ forloop.parentloop.counter0 }}-price">
-                                            {{ field.price }} руб.
-                                        </span>
-                                    {% endif %}
-                               {% else %}
+                               {% if field.name != 'price' %}
+
                                     {% if field.name == 'product %}
                                         {% cache 3600 orderitemform_product.value %}
                                             {% field %}
                                         {% endcache %}
                                     {% else %}
                                         {% field %}
+                                    {% endif %}
+                               {% else %}
+                               <span class="orderitems--{{ forloop.parentloop.counter0 }}-price">
+                                   {{ field.price }} руб.</span>
+                                    {% endif %}
                                {% endif %}
 
 
-                               {{ field }}
                            </td>
                        {% endfor %}
                    </tr>
